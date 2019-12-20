@@ -37,9 +37,9 @@ class Post
     private $created_at;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      */
-    private $author;
+    private $user;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -119,6 +119,18 @@ class Post
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
