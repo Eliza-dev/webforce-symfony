@@ -4,9 +4,15 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 /**
+ * @ORM\Entity
+ * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  */
+
 class Post
 {
     /**
@@ -26,7 +32,6 @@ class Post
      */
     private $summary;
 
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -38,14 +43,21 @@ class Post
     private $created_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     */
-    private $user;
-
-    /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="post_image", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     */
+    protected $user;
 
     public function __construct()
     {
@@ -105,6 +117,18 @@ class Post
         return $this;
     }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
     public function getImage(): ?string
     {
         return $this->image;
@@ -117,15 +141,14 @@ class Post
         return $this;
     }
 
-    public function getUser(): ?User
+    public function setImageFile(File $image = null)
     {
-        return $this->user;
+        $this->imageFile = $image;
     }
 
-    public function setUser(?User $user): self
+    public function getImageFile()
     {
-        $this->user = $user;
-
-        return $this;
+        return $this->imageFile;
     }
+
 }
