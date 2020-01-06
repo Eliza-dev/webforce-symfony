@@ -3,9 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+         {% block stylesheets %}{% endblock %}
     </head>
     <body>
 
@@ -15,13 +16,11 @@
             </div>
         {% endfor %}
 
-        {% for flash in app.session.flashBag.get('success') %}
-        <div id="success" class="success alert alert-success">
-            {{ flash }}
-        </div>
-    {% endfor %}
+        
 
         {% block body %}{% endblock %}
+            <script src="{{ asset("js/jquery-3.3.1.js") }}"></script>
+            <script type="text/javascript" src="{{ asset('js/main.js')}}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/post")
@@ -20,8 +21,12 @@ class PostController extends AbstractController
      */
     public function index(PostRepository $postRepository): Response
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $posts = $em->getRepository('App:Post')->getLastInserted('App:Post', 3);
+
         return $this->render('post/index.html.twig', [
-            'posts' => $postRepository->findAll(),
+            'posts' => $posts,
         ]);
     }
 
@@ -104,5 +109,18 @@ class PostController extends AbstractController
         }
 
         return $this->redirectToRoute('post_index');
+    }
+/**
+     * @Route("/api/post/", name="api_post_index", methods={"GET"})
+     */
+    public function apiIndex()
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $posts = $em->getRepository('App:Post')->getLastInsertedAjax('App:Post', 5);
+
+        return new JsonResponse(array(
+            'posts' => $posts
+        ));
     }
 }

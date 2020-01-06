@@ -8,10 +8,9 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                
                 <th>Title</th>
                 <th>Summary</th>
-                <th>Content</th>
                 <th>Created_at</th>
                 <th>Author</th>
                 <th>Image</th>
@@ -21,15 +20,21 @@
         <tbody>
         {% for post in posts %}
             <tr>
-                <td>{{ post.id }}</td>
+                
                 <td>{{ post.title }}</td>
                 <td>{{ post.summary }}</td>
-                <td>{{ post.content }}</td>
                 <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ post.user }}</td>
-                <td>{{ post.image }}</td>
-                <td><img src="{{asset('images/post/')}}{{ post.image }}"></td>
+                {#<td>{{ post.author }}</td>#}
+                {#<td>{{ post.user }}</td>#}
                 <td>
+                {% if post.user %}
+                    {{ post.user.username }}
+                {% else %}
+                    <i>Annonymous</i>
+                {% endif %}
+                </td>
+                 <td><img src="{{asset('images/post/')}}{{ post.image }}" style="width:75px;max-height:75px;"></td>
+
                     <a href="{{ path('post_show', {'id': post.id}) }}">show</a>
                     <a href="{{ path('post_edit', {'id': post.id}) }}">edit</a>
                 </td>
@@ -43,4 +48,11 @@
     </table>
 
     <a href="{{ path('post_new') }}">Create new</a>
+
+    <h1>Ajax</h1>
+    <button class = "ajax">click me!</button>
+    <table class = "table table-bordered table-dark">
+        <tbody id = "post"></tbody>
+    </table>
+
 {% endblock %}
