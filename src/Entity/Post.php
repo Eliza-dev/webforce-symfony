@@ -59,6 +59,11 @@ class Post
      */
     protected $user;
 
+     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\post")
+     */
+    protected $post;
+
     public function __construct()
     {
         $this->created_at = new \Datetime;
@@ -149,6 +154,18 @@ class Post
     public function getImageFile()
     {
         return $this->imageFile;
+    }
+
+    public function getPost(): ?post
+    {
+        return $this->post;
+    }
+
+    public function setPost(?post $post): self
+    {
+        $this->post = $post;
+
+        return $this;
     }
 
 }

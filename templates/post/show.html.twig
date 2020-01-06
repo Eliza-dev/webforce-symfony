@@ -3,11 +3,6 @@
 {% block title %}Post{% endblock %}
 
 {% block body %}
-{ % for flash in app.session.flashBag.get('notice') %}
-    <div class="notice alert alert-notice">
-        {{ flash }}
-    </div>
-    {% endfor %}
     <h1>Post</h1>
 
     <table class="table">
@@ -34,11 +29,11 @@
             </tr>
             <tr>
                 <th>Author</th>
-                <td>{{ post.author }}</td>
+                <td>{{ post.user }}</td>
             </tr>
             <tr>
                 <th>Image</th>
-                <td>{{ post.image }}</td>
+                <td><img src="{{asset('images/post/')}}{{ post.image }}" style="width:75px;max-height:75px;"></td>
             </tr>
         </tbody>
     </table>
@@ -48,4 +43,12 @@
     <a href="{{ path('post_edit', {'id': post.id}) }}">edit</a>
 
     {{ include('post/_delete_form.html.twig') }}
+
+    <hr>
+    <h1>Commentaires</h1>
+    {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type="submit" value="Create" />
+        {{ form_end(form) }}
+    
 {% endblock %}

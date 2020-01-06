@@ -34,10 +34,11 @@
                 {% endif %}
                 </td>
                  <td><img src="{{asset('images/post/')}}{{ post.image }}" style="width:75px;max-height:75px;"></td>
-
+                <td>
                     <a href="{{ path('post_show', {'id': post.id}) }}">show</a>
                     <a href="{{ path('post_edit', {'id': post.id}) }}">edit</a>
                 </td>
+                
             </tr>
         {% else %}
             <tr>

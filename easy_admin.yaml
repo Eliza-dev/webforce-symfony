@@ -1,0 +1,11 @@
+easy_admin:
+    entities:
+        Post:
+            # ...
+            list:
+                fields:
+                    - { property: 'image', type: 'image', base_path: '%app.path.post_image%' }
+            # ...
+            show:
+                fields:
+                    - { property: 'image', type: 'image', base_path: '%app.path.post_image%' }
