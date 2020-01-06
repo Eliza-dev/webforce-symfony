@@ -80,11 +80,12 @@ class PostController extends AbstractController
         $form = $this->createForm(CommentairesType::class, $commentaire);
         $form->handleRequest($request);
 
+        $entityManager = $this->getDoctrine()->getManager();
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            
 
             $commentaire->setUser($this->getUser());
-
             $commentaire->setPost($post);
             
             $entityManager->persist($commentaire);
@@ -93,9 +94,12 @@ class PostController extends AbstractController
             return $this->redirectToRoute('post_index');
         }
 
+        $comments = $entityManager->getRepository('App:Commentaires')->findByPost($post);
+
          return $this->render('post/show.html.twig', [
             'post' => $post,
             'form' => $form->createView(),
+            'comments' => $comments
         ]);
     }
 

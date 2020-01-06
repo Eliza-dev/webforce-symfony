@@ -46,9 +46,17 @@
 
     <hr>
     <h1>Commentaires</h1>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     {{ form_start(form) }}
             {{ form_widget(form) }}
+            
             <input type="submit" value="Create" />
         {{ form_end(form) }}
-    
+        {% endif %}
+    {% for comment in comments %}
+    <p>Posté par {{ comment.user }}
+    le {{ comment.createdAt.date|date('d/m/y h:i')}}
+    </p>
+        {{comment.comment}}
+        {% endfor %}
 {% endblock %}
